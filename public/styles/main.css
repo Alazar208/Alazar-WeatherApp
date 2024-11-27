@@ -1,0 +1,27 @@
+body {
+    min-height: 100vh;
+    /* background: #212534; */
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+  }
+
+  .top-half-center {
+    flex: 1; /* Take half of the available space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-half-center {
+    flex: 1; /* Take the remaining half of the available space */
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    padding-top: 1rem;
+}
