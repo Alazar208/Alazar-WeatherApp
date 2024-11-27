@@ -114,12 +114,11 @@ weather-search-app/
 
 ## Contribution
 
-- This project can be completed individually or in pairs.
+- This project can be completed individually 
 - Ensure code and report adhere to the formatting and clarity standards provided.
 - For questions or feedback, contact:  
-  - **Student Name(s)**: Your Name(s)  
-  - **Email**: your.email@example.com  
-  - **Student ID(s)**: Your ID(s)
+  - **Name(s)**: Alazar Yonas 
+  - **Email**: Alazar208@gmail.com
 
 ---
 
