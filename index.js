@@ -6,8 +6,6 @@ import axios from "axios";
 // Create an Express application
 const app = express();
 
-
-const app = express();
 const Port = 3000;
 const API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
