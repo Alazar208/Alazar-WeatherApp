@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Search</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?weather,sky') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        main {
+            background: rgba(146, 11, 11, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        h2, h3, h4 {
+            color: #f8f9fa;
+        }
+        
+    </style>
+</head>
+<body>
+    <main class="container-fluid d-flex flex-column justify-content-between vh-100">
+
+        <!-- Top Half for Input -->
+        <div class="top-half-center">
+            <form action="/" id="form" class="text-center" method="POST">
+                <h2 class="mb-4">Check the Weather</h2>
+                <div class="container d-flex justify-content-center">
+                    <input type="text" name="city" 
+                    class="form-control col-sm-10 col-md-8 col-lg-10 " 
+                    placeholder="Enter city or ZIP code" 
+                    required 
+                    style="font-size: 1.1rem; height: 3.5rem; padding: 0.5rem;">
+                             </div>
+                <button type="submit" class="btn btn-primary mt-3">Get Weather</button>
+            </form>
+        </div>
+
+        <% if (data) { %>
+            <div class="card-header text-center mt-4">
+                <h3>Weather in <%= data.name %>, <%= data.sys.country %></h3>
+                <img src="https://openweathermap.org/img/wn/<%= data.weather[0].icon %>@2x.png" alt="<%= data.weather[0].description %>" class="mt-2">
+            </div>
+        
+            <!-- Bottom Half for Weather Display -->
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center bottom-half-center">
+
+                <!-- Temperature Details -->
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm bg-dark text-light">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Temperature</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Current: <%= ((data.main.temp - 273.15) * 1.8 + 32).toFixed(1) %> °F</li>
+                                <li>Feels Like: <%= ((data.main.feels_like - 273.15) * 1.8 + 32).toFixed(1) %> °F</li>
+                                <li>Conditions: <%= data.weather[0].main %> - <%= data.weather[0].description %></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Weather Information -->
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm bg-dark text-light">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Details</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Humidity: <%= data.main.humidity %> %</li>
+                                <li>Wind Speed: <%= data.wind.speed %> m/s</li>
+                                <li>Cloudiness: <%= data.clouds.all %> %</li>
+                                <li>Visibility: <%= (data.visibility / 1000).toFixed(1) %> km</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sunrise and Sunset -->
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm bg-dark text-light">
+                        <div class="card-header py-3">
+                            <h4 class="my-0 fw-normal">Sunrise & Sunset</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Sunrise: <%= new Date(data.sys.sunrise * 1000).toLocaleTimeString() %></li>
+                                <li>Sunset: <%= new Date(data.sys.sunset * 1000).toLocaleTimeString() %></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } else if (error) { %>
+            <p class="text-danger text-center mt-3"><%= error %></p>
+        <% } %>
+
+        <footer class="footer text-light">
+            <p>Powered by OpenWeatherMap | Designed by Alazar Yonas</p>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        <% if (data && data.weather && data.weather[0]) { %>
+            const weatherCondition = "<%= data.weather[0].main %>"; // Extract weather condition
+            const weatherColors = {
+                Clear: "linear-gradient(to bottom, #87CEFA, #f9d71c)",
+                Clouds: "linear-gradient(to bottom, #d3d3d3, #808080)",
+                Rain: "linear-gradient(to bottom, #4a90e2, #274472)",
+                Snow: "linear-gradient(to bottom, #ffffff, #b0c4de)",
+                Thunderstorm: "linear-gradient(to bottom, #1c1c1c, #8b0000)",
+                Drizzle: "linear-gradient(to bottom, #aec6cf, #708090)",
+                Mist: "linear-gradient(to bottom, #f0e68c, #d2b48c)",
+                Default: "linear-gradient(to bottom, #87CEEB, #4682B4)"
+            };
+            document.body.style.background = weatherColors[weatherCondition] || weatherColors.Default;
+        <% } else { %>
+            console.error("No weather data available to set background color.");
+        <% } %>
+    </script>
+      
+</body>
+</html>
