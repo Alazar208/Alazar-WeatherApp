@@ -1,6 +1,11 @@
-import express from "express";
 import bodyParser from "body-parser";
+// Import required modules
+import express from "express";
 import axios from "axios";
+
+// Create an Express application
+const app = express();
+
 
 const app = express();
 const Port = 3000;
